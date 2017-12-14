@@ -1,0 +1,116 @@
+
+<style>
+#haho
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%) scale(5);
+}
+
+@keyframes shrink{
+  from {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%) scale(5);
+  }
+  to {
+    top: 0px;
+    left: 0px;
+    transform: none;
+  }
+}
+
+.shrink
+{
+  animation-name: shrink;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
+}
+</style>
+<body width="100%" height="100%" style="user-select:none;" onmousedown="generate()">
+<span id="haho" style="margin: 5px 5px 5px 5px; text-align: center; display: inline-block;">
+<div style="transform: rotate(90deg); font-family: sans-serif; padding: 5px 5px 5px 5px; margin: 5px 5px 5px 5px; box-shadow: 5px 5px 0px 0px black; whiteSpace: nowrap; width: 20px; height: 20px; background: orange; border-radius: 10px; border-style: solid; border-color: orange;">|:c)</div>
+<div style="font-family: Comic Sans MS; display: inline-block;">haho and friends</div>
+</span>
+<div id="faces" style="width: 100%; height: 100%; top: 75px; position: absolute; left: 0;"></div>
+</body>
+<script>
+var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+var consonants = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"];
+var vowels = ["a", "e", "i", "o", "u"];
+var hats = ["", "", ""];
+var noses = ["-", "+", ".", "*", "^", "~", "_", "v", "c"];
+var mouths = ["}", "{", "[", "]", "\\", "|", "/", "<", ">", "c", "!", "$", "@", ")", "("];
+var eyes = ["=", ":", ";", "8", "E", "|:"];
+var colours = ["maroon", "brown", "olive", "teal", "navy", "red", "black", "orange", "yellow", "lime", "green", "cyan", "blue", "purple", "magenta", "grey", "pink", "coral", "beige", "mint", "lavender", "white"];
+
+var started = false;
+
+function generate()
+{
+  if (started == false)
+  {
+    started = true;
+
+    document.getElementById("haho").classList.remove("grow");
+    document.getElementById("haho").classList.add("shrink");
+
+    return
+  }
+
+var container = document.createElement("SPAN");
+container.style.margin = "5px 5px 5px 5px";
+container.style.textAlign = "center";
+container.style.display = "inline-block";
+
+var name = document.createElement("DIV");
+name.style.fontFamily = "Comic Sans MS";
+var consonant = consonants[Math.floor(Math.random()*consonants.length)];
+var vowel1 = vowels[Math.floor(Math.random()*vowels.length)];
+var vowel2 = vowels[Math.floor(Math.random()*vowels.length)];
+name.innerHTML = consonant + vowel1 + consonant + vowel2;
+name.style.display = "inline-block";
+
+if (name == "haho")
+{
+  return;
+}
+
+var face = document.createElement("DIV");
+face.style.width = "20px";
+face.style.height = "20px";
+face.style.background = colours[Math.floor((vowels.indexOf(vowel2) / vowels.length + vowels.indexOf(vowel1) / vowels.length + consonants.indexOf(consonant) / consonants.length) / 3 * colours.length)];
+face.style.borderRadius = ((vowels.indexOf(vowel2) / vowels.length + vowels.indexOf(vowel1) / vowels.length) / 2 * 20).toString() + "px";
+face.style.borderStyle = "solid";
+face.style.borderColor = face.style.background;
+face.style.fontFamily = "sans-serif";
+face.style.padding = "5px 5px 5px 5px";
+face.style.margin = "5px 5px 5px 5px";
+face.style.boxShadow = "5px 5px 0px 0px black"
+face.style.whiteSpace = "nowrap";
+
+if (face.style.background == "black" || face.style.background == "navy" || face.style.background == "purple" || face.style.background == "maroon")
+{
+  face.style.color = "white";
+}
+
+if (face.style.background == "white")
+{
+  face.style.borderColor = "black";
+}
+
+face.innerHTML = hats[Math.floor((vowels.indexOf(vowel2) / vowels.length + vowels.indexOf(vowel1) / vowels.length + consonants.indexOf(consonant) / consonants.length) / 3 * hats.length)] +
+eyes[Math.floor(consonants.indexOf(consonant) / consonants.length * eyes.length)] +
+noses[Math.floor(vowels.indexOf(vowel2) / vowels.length * noses.length)] +
+mouths[Math.floor(vowels.indexOf(vowel1) / vowels.length * mouths.length)];
+face.style.transform = "rotate(90deg)";
+
+container.appendChild(face);
+container.appendChild(name);
+
+document.getElementById("faces").appendChild(container);
+}
+</script>
